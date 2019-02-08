@@ -1,26 +1,57 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import styled from "styled-components";
 
+// #region Styled Components
+const Styles = styled.div`
+  p {
+    color: red;
+  }
+`;
+// #endregion
 class App extends Component {
+  state = {
+    isMenuOpen: false,
+    students: [
+      {
+        name: "Billy",
+        age: 24
+      },
+      {
+        name: "Bill Go",
+        age: 27
+      },
+      {
+        name: "Sam",
+        age: 21
+      },
+      {
+        name: "Cam",
+        age: 20
+      }
+    ]
+  };
   render() {
+    const newStudents = this.state.students.map(student => ({
+      ...student,
+      isPresent: false
+    }));
+    newStudents[1].isPresent = true;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Styles>
+        <p>Hi, Derrick! You have ReactJS on your machine here.</p>
+        <h1>Students</h1>
+        <ul>
+          {newStudents
+            .filter(student => student.isPresent)
+            .map(student => {
+              return (
+                <li>
+                  {student.name} is {student.age}
+                </li>
+              );
+            })}
+        </ul>
+      </Styles>
     );
   }
 }
